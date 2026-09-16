@@ -1,32 +1,33 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Geririmbi | Fútbol, Gaming y Entretenimiento</title>
+  <title>Geririmbi | Fútbol, Gaming y Contenido</title>
 
   <meta
     name="description"
-    content="Web oficial de Geririmbi. Contenido de fútbol, gaming, retos, opiniones y entretenimiento."
+    content="Web oficial de Geririmbi. Fútbol, gaming, retos, opiniones, vídeos y entretenimiento."
   />
 
   <style>
     :root {
-      --background: #050509;
-      --surface: #0d0d16;
-      --surface-light: #171725;
-      --text: #ffffff;
-      --muted: #a7a7b8;
+      --bg: #080a10;
+      --bg-soft: #10131c;
+      --card: #121722;
+      --card-hover: #171d2b;
 
-      --blue: #1261ff;
-      --blue-dark: #0845c7;
-      --red: #e5092f;
-      --red-dark: #ad0625;
+      --white: #f5f7fb;
+      --text: #d9deea;
+      --muted: #929bad;
 
-      --border: rgba(255, 255, 255, 0.12);
+      --blue: #477dff;
+      --blue-soft: #8eaeff;
+      --red: #d94b65;
+
+      --border: rgba(255, 255, 255, 0.1);
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
 
     * {
@@ -38,9 +39,33 @@
 
     body {
       font-family: Arial, Helvetica, sans-serif;
-      background: var(--background);
-      color: var(--text);
+      background:
+        radial-gradient(
+          circle at 85% 5%,
+          rgba(71, 125, 255, 0.12),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 10% 35%,
+          rgba(217, 75, 101, 0.07),
+          transparent 28%
+        ),
+        var(--bg);
+      color: var(--white);
       line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 45px 45px;
+      mask-image: linear-gradient(to bottom, black, transparent 75%);
+      z-index: -1;
     }
 
     a {
@@ -48,39 +73,87 @@
       text-decoration: none;
     }
 
+    img {
+      max-width: 100%;
+    }
+
     .container {
-      width: 90%;
-      max-width: 1150px;
-      margin: auto;
+      width: min(1120px, 90%);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 85px 0;
+    }
+
+    .section-heading {
+      max-width: 650px;
+      margin-bottom: 35px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-soft);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 24px;
+      height: 2px;
+      background: var(--red);
+      border-radius: 10px;
+    }
+
+    h2 {
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.05;
+      letter-spacing: -1.8px;
+      margin-bottom: 16px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      font-size: 16px;
     }
 
     /* NAVEGACIÓN */
 
-    nav {
+    .navbar {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
-      padding: 25px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-      z-index: 10;
+      z-index: 20;
+      padding: 25px 0;
     }
 
-    .logo {
+    .navbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
       font-size: 25px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: -1px;
     }
 
-    .logo span {
+    .brand span {
       color: var(--red);
     }
 
     .nav-links {
       display: flex;
+      align-items: center;
       gap: 25px;
       list-style: none;
       color: var(--muted);
@@ -88,378 +161,619 @@
     }
 
     .nav-links a {
-      transition: 0.2s ease;
+      transition: color 0.2s ease;
     }
 
     .nav-links a:hover {
-      color: var(--blue);
+      color: var(--white);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      transition: 0.2s ease;
+    }
+
+    .nav-cta:hover {
+      background: #376be5;
+      transform: translateY(-2px);
     }
 
     /* PORTADA */
 
-    header {
-      min-height: 100vh;
+    .hero {
+      min-height: 760px;
+      padding: 145px 0 80px;
       display: flex;
       align-items: center;
-      background:
-        radial-gradient(
-          circle at top right,
-          rgba(18, 97, 255, 0.25),
-          transparent 35%
-        ),
-        radial-gradient(
-          circle at bottom left,
-          rgba(229, 9, 47, 0.18),
-          transparent 30%
-        ),
-        var(--background);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
     }
 
-    .hero-content {
-      max-width: 850px;
-      padding-top: 80px;
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 65px;
     }
 
     .profile-photo {
-      width: 150px;
-      height: 150px;
+      width: 105px;
+      height: 105px;
       object-fit: cover;
+      object-position: center;
       border-radius: 50%;
-      border: 5px solid var(--blue);
+      border: 4px solid var(--blue);
       box-shadow:
-        0 0 0 5px rgba(229, 9, 47, 0.25),
-        0 0 35px rgba(18, 97, 255, 0.35);
-      margin-bottom: 28px;
-    }
-
-    .tag {
-      display: inline-block;
-      color: var(--blue);
-      border: 1px solid rgba(18, 97, 255, 0.5);
-      background: rgba(18, 97, 255, 0.1);
-      padding: 7px 13px;
-      border-radius: 30px;
-      font-size: 13px;
+        0 0 0 6px rgba(217, 75, 101, 0.12),
+        0 12px 40px rgba(0, 0, 0, 0.45);
       margin-bottom: 25px;
-      font-weight: 700;
     }
 
-    h1 {
-      font-size: clamp(45px, 8vw, 90px);
+    .hero h1 {
+      font-size: clamp(48px, 6vw, 78px);
       line-height: 0.98;
       letter-spacing: -4px;
       margin-bottom: 25px;
     }
 
-    h1 span {
+    .hero h1 span {
       color: var(--red);
     }
 
-    .hero-text {
+    .hero-description {
+      max-width: 590px;
       color: var(--muted);
-      font-size: 19px;
-      max-width: 700px;
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
       margin-bottom: 35px;
     }
 
-    .buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
     .button {
-      display: inline-block;
-      padding: 14px 23px;
-      border-radius: 8px;
-      font-weight: 700;
-      transition: 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 800;
       border: 1px solid var(--border);
+      transition: 0.2s ease;
     }
 
     .button-primary {
       background: var(--blue);
-      color: #ffffff;
+      border-color: var(--blue);
+      color: white;
     }
 
     .button-primary:hover {
-      background: var(--blue-dark);
+      background: #376be5;
       transform: translateY(-2px);
     }
 
     .button-secondary {
-      background: var(--surface);
-      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--white);
     }
 
     .button-secondary:hover {
-      border-color: var(--red);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--blue);
       transform: translateY(-2px);
     }
 
-    /* SECCIONES */
-
-    section {
-      padding: 100px 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .section-title {
-      font-size: 42px;
-      letter-spacing: -1.5px;
-      margin-bottom: 15px;
-    }
-
-    .section-subtitle {
+    .hero-mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
       color: var(--muted);
-      margin-bottom: 45px;
-      max-width: 700px;
+      font-size: 13px;
     }
 
-    /* SOBRE MÍ */
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 35px;
+    .hero-mini-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: color 0.2s ease;
     }
 
-    .about-card {
-      background: var(--surface);
+    .hero-mini-links a:hover {
+      color: var(--blue-soft);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .visual-card {
+      position: relative;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(71, 125, 255, 0.18),
+          rgba(217, 75, 101, 0.09) 55%,
+          rgba(255, 255, 255, 0.02)
+        ),
+        var(--card);
       border: 1px solid var(--border);
-      padding: 30px;
-      border-radius: 15px;
-      transition: 0.2s ease;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    .about-card:hover {
-      border-color: var(--blue);
-      transform: translateY(-4px);
+    .visual-card::before {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      background: rgba(71, 125, 255, 0.13);
+      border-radius: 50%;
+      filter: blur(50px);
+      top: -100px;
+      right: -90px;
     }
 
-    .about-card h3 {
-      margin-bottom: 12px;
+    .visual-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      color: var(--muted);
+      font-size: 12px;
+      position: relative;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(217, 75, 101, 0.5);
+    }
+
+    .visual-main {
+      position: relative;
+      text-align: center;
+      padding: 20px 0 25px;
+    }
+
+    .visual-main .big-name {
+      font-size: clamp(42px, 5vw, 68px);
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+
+    .visual-main .big-name span {
       color: var(--blue);
     }
 
-    .about-card p {
+    .visual-main p {
       color: var(--muted);
-    }
-
-    /* TIPOS DE CONTENIDO */
-
-    .content-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .content-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 28px;
-      transition: 0.2s ease;
-    }
-
-    .content-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--red);
-    }
-
-    .content-icon {
-      font-size: 35px;
-      margin-bottom: 15px;
-    }
-
-    .content-card h3 {
-      margin-bottom: 10px;
-    }
-
-    .content-card p {
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    /* VÍDEOS */
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .video-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      overflow: hidden;
-      transition: 0.2s ease;
-    }
-
-    .video-card:hover {
-      border-color: var(--blue);
-      transform: translateY(-4px);
-    }
-
-    .video-placeholder {
-      min-height: 180px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background:
-        linear-gradient(
-          135deg,
-          rgba(18, 97, 255, 0.3),
-          rgba(229, 9, 47, 0.25),
-          rgba(0, 0, 0, 0.8)
-        ),
-        #202020;
-      font-size: 45px;
-    }
-
-    .video-placeholder iframe {
-      display: block;
-      width: 100%;
-      height: 220px;
-      border: none;
-    }
-
-    .video-info {
-      padding: 22px;
-    }
-
-    .video-info h3 {
-      margin-bottom: 8px;
-    }
-
-    .video-info p {
-      color: var(--muted);
+      margin-top: 12px;
       font-size: 14px;
-      margin-bottom: 15px;
     }
 
-    /* REDES SOCIALES */
+    .visual-lines {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .visual-line {
+      height: 5px;
+      border-radius: 20px;
+      background: var(--blue);
+    }
+
+    .visual-line:nth-child(2) {
+      background: var(--red);
+    }
+
+    .visual-line:nth-child(3) {
+      background: #31394b;
+    }
+
+    /* ESTADÍSTICAS */
+
+    .stats {
+      padding: 25px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .stat {
+      padding: 15px 20px;
+      border-right: 1px solid var(--border);
+    }
+
+    .stat:last-child {
+      border-right: none;
+    }
+
+    .stat-number {
+      font-size: 35px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: var(--white);
+    }
+
+    .stat-number span {
+      color: var(--blue);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* REDES DESTACADAS */
 
     .social-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 18px;
     }
 
     .social-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 220px;
       padding: 25px;
-      border-radius: 15px;
-      text-align: center;
-      transition: 0.2s ease;
+      border-radius: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: 0.25s ease;
     }
 
     .social-card:hover {
-      border-color: var(--red);
-      transform: translateY(-4px);
+      transform: translateY(-5px);
+      background: var(--card-hover);
+      border-color: var(--blue);
+      box-shadow: var(--shadow);
+    }
+
+    .social-card::after {
+      content: "";
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(71, 125, 255, 0.08);
+      right: -80px;
+      bottom: -80px;
+    }
+
+    .social-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .social-icon svg {
+      width: 29px;
+      height: 29px;
+      fill: currentColor;
+    }
+
+    .youtube {
+      color: #ef596b;
+    }
+
+    .tiktok {
+      color: #9db8ff;
+    }
+
+    .instagram {
+      color: #dca0ad;
     }
 
     .social-card h3 {
-      margin: 10px 0;
+      font-size: 23px;
+      margin-bottom: 5px;
     }
 
     .social-card p {
       color: var(--muted);
       font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blue-soft);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .social-link:hover {
+      color: var(--white);
+    }
+
+    /* VÍDEO */
+
+    .latest-video {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 25px;
+      align-items: stretch;
+    }
+
+    .video-wrapper {
+      background: #000;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      min-height: 360px;
+    }
+
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+      display: block;
+      border: none;
+    }
+
+    .video-info {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .video-info h3 {
+      font-size: 30px;
+      line-height: 1.1;
+      letter-spacing: -1px;
       margin-bottom: 15px;
     }
 
-    .social-button {
-      display: inline-block;
-      color: var(--blue);
-      font-weight: 700;
+    .video-info p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 25px;
+    }
+
+    .video-label {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    /* CONTENIDO */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .content-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
       transition: 0.2s ease;
     }
 
-    .social-button:hover {
-      color: var(--red);
+    .content-card:hover {
+      border-color: var(--red);
+      transform: translateY(-4px);
+    }
+
+    .content-number {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 22px;
+    }
+
+    .content-card h3 {
+      font-size: 23px;
+      margin-bottom: 10px;
+    }
+
+    .content-card p {
+      color: var(--muted);
+      font-size: 14px;
     }
 
     /* CONTACTO */
 
     .contact-box {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 65px 30px;
+      border-radius: 22px;
       background:
         linear-gradient(
           135deg,
-          rgba(18, 97, 255, 0.12),
-          rgba(229, 9, 47, 0.12)
+          rgba(71, 125, 255, 0.13),
+          rgba(217, 75, 101, 0.1)
         ),
-        var(--surface);
+        var(--card);
       border: 1px solid var(--border);
-      border-radius: 15px;
-      padding: 45px;
-      text-align: center;
+    }
+
+    .contact-box::before {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: rgba(71, 125, 255, 0.09);
+      filter: blur(65px);
+      top: -180px;
+      left: -100px;
+    }
+
+    .contact-box h2,
+    .contact-box p,
+    .contact-box a {
+      position: relative;
     }
 
     .contact-box p {
-      color: var(--muted);
       max-width: 650px;
-      margin: 15px auto 25px;
+      margin: 0 auto 28px;
+      color: var(--muted);
     }
 
-    /* PIE DE PÁGINA */
+    /* FOOTER */
 
     footer {
       padding: 30px 0;
       border-top: 1px solid var(--border);
       color: var(--muted);
-      text-align: center;
-      font-size: 14px;
+      font-size: 13px;
     }
 
-    /* MÓVIL */
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
 
-    @media (max-width: 800px) {
-      nav {
-        padding: 20px 5%;
+    .footer-links {
+      display: flex;
+      gap: 18px;
+    }
+
+    .footer-links a:hover {
+      color: var(--white);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .latest-video {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 145px;
+      }
+
+      .hero-visual {
+        max-width: 600px;
+      }
+
+      .video-info {
+        padding: 30px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        padding: 20px 0;
       }
 
       .nav-links {
         display: none;
       }
 
-      .hero-content {
-        padding-top: 100px;
+      .hero {
+        padding: 125px 0 60px;
       }
 
-      .profile-photo {
-        width: 125px;
-        height: 125px;
-      }
-
-      h1 {
-        font-size: clamp(42px, 13vw, 70px);
+      .hero h1 {
+        font-size: clamp(46px, 13vw, 70px);
         letter-spacing: -2px;
       }
 
-      .hero-text {
-        font-size: 17px;
+      .hero-description {
+        font-size: 16px;
       }
 
-      .about-grid,
-      .content-grid,
-      .video-grid,
-      .social-grid {
+      .profile-photo {
+        width: 92px;
+        height: 92px;
+      }
+
+      .stats-grid,
+      .social-grid,
+      .content-grid {
         grid-template-columns: 1fr;
       }
 
-      section {
-        padding: 70px 0;
+      .stat {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 18px 0;
       }
 
-      .section-title {
-        font-size: 34px;
+      .stat:last-child {
+        border-bottom: none;
+      }
+
+      .section {
+        padding: 65px 0;
+      }
+
+      .visual-card {
+        padding: 22px;
+      }
+
+      .video-wrapper,
+      .video-wrapper iframe {
+        min-height: 230px;
       }
 
       .contact-box {
-        padding: 30px 20px;
+        padding: 45px 22px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
       }
     }
   </style>
@@ -469,411 +783,483 @@
 
   <!-- NAVEGACIÓN -->
 
-  <nav>
-    <a href="#" class="logo">
-      geri<span>rimbi</span>
-    </a>
+  <nav class="navbar">
+    <div class="container navbar-inner">
 
-    <ul class="nav-links">
-      <li><a href="#sobre-mi">Sobre mí</a></li>
-      <li><a href="#contenido">Contenido</a></li>
-      <li><a href="#videos">Vídeos</a></li>
-      <li><a href="#redes">Redes</a></li>
-      <li><a href="#contacto">Contacto</a></li>
-    </ul>
+      <a href="#" class="brand">
+        geri<span>rimbi</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#sobre-mi">Sobre mí</a></li>
+        <li><a href="#redes">Redes</a></li>
+        <li><a href="#videos">Vídeos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+
+      <a href="https://www.youtube.com/@geririmbi"
+         target="_blank"
+         rel="noopener noreferrer"
+         class="nav-cta">
+        Ver YouTube →
+      </a>
+
+    </div>
   </nav>
 
   <!-- PORTADA -->
 
-  <header>
-    <div class="container">
+  <header class="hero">
+    <div class="container hero-grid">
+
       <div class="hero-content">
 
         <img
-          src="perfil.png"
+          src="perfil.jpg"
           alt="Foto de perfil de Geririmbi"
           class="profile-photo"
         />
 
-        <div class="tag">
-          CREADOR DE CONTENIDO · FÚTBOL · GAMING
+        <div class="eyebrow">
+          Creador de contenido
         </div>
 
         <h1>
           Soy <span>Geririmbi.</span><br />
-          Creo. Juego. Comparto.
+          Fútbol, gaming<br />
+          y mucho más.
         </h1>
 
-        <p class="hero-text">
-          Bienvenido a mi web oficial. Aquí encontrarás mis vídeos,
-          retos de fútbol, opiniones, gaming, proyectos y todo lo que
-          estoy construyendo en redes sociales.
+        <p class="hero-description">
+          Creo contenido sobre fútbol, videojuegos, retos, opiniones
+          y entretenimiento. Este es mi espacio para compartir todo
+          lo que hago en redes.
         </p>
 
-        <div class="buttons">
+        <div class="hero-actions">
 
           <a
-            href="https://www.tiktok.com/@geririmbi"
+            href="https://www.youtube.com/@geririmbi"
             target="_blank"
             rel="noopener noreferrer"
             class="button button-primary"
           >
-            Ver TikTok
+            Ver mi canal de YouTube →
           </a>
 
           <a
-            href="#videos"
+            href="#redes"
             class="button button-secondary"
           >
-            Ver contenido
+            Mis redes
           </a>
 
         </div>
-      </div>
-    </div>
-  </header>
 
-  <!-- SOBRE MÍ -->
-
-  <section id="sobre-mi">
-    <div class="container">
-
-      <h2 class="section-title">
-        Sobre mí
-      </h2>
-
-      <p class="section-subtitle">
-        Fútbol, videojuegos y creación de contenido forman parte de mi día a día.
-      </p>
-
-      <div class="about-grid">
-
-        <div class="about-card">
-          <h3>¿Quién soy?</h3>
-
-          <p>
-            Soy Geririmbi, creador de contenido centrado en fútbol,
-            gaming, retos, opiniones y entretenimiento. Comparto mi
-            evolución, mis experiencias y los proyectos que voy creando.
-          </p>
-        </div>
-
-        <div class="about-card">
-          <h3>¿Qué encontrarás aquí?</h3>
-
-          <p>
-            Mis redes sociales, vídeos destacados, nuevos proyectos,
-            contenido de fútbol, partidas de videojuegos y formas de
-            contactar conmigo para colaboraciones.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTENIDO -->
-
-  <section id="contenido">
-    <div class="container">
-
-      <h2 class="section-title">
-        Mi contenido
-      </h2>
-
-      <p class="section-subtitle">
-        Diferentes tipos de contenido para disfrutar y seguir mi evolución.
-      </p>
-
-      <div class="content-grid">
-
-        <div class="content-card">
-          <div class="content-icon">⚽</div>
-
-          <h3>Fútbol</h3>
-
-          <p>
-            Retos, filtros, opiniones, partidos, actualidad futbolística
-            y contenido relacionado con el mundo del fútbol.
-          </p>
-        </div>
-
-        <div class="content-card">
-          <div class="content-icon">🎮</div>
-
-          <h3>Gaming</h3>
-
-          <p>
-            Fortnite, Rocket League, EA Sports FC y momentos destacados
-            de mis partidas y directos.
-          </p>
-        </div>
-
-        <div class="content-card">
-          <div class="content-icon">🎥</div>
-
-          <h3>Entretenimiento</h3>
-
-          <p>
-            Vlogs, experiencias, nuevos retos, proyectos personales y
-            contenido diferente para las redes.
-          </p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- VÍDEOS -->
-
-  <section id="videos">
-    <div class="container">
-
-      <h2 class="section-title">
-        Vídeos destacados
-      </h2>
-
-      <p class="section-subtitle">
-        Mira mi último vídeo y descubre el contenido que estoy creando.
-      </p>
-
-      <div class="video-grid">
-
-        <!-- ÚLTIMO VÍDEO DE YOUTUBE -->
-
-        <div class="video-card">
-
-          <div class="video-placeholder">
-
-            <iframe
-              src="https://www.youtube.com/embed/p8u0HCdWr2E"
-              title="Último vídeo de Geririmbi"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen>
-            </iframe>
-
-          </div>
-
-          <div class="video-info">
-
-            <h3>
-              Mi último vídeo
-            </h3>
-
-            <p>
-              Descubre mi último vídeo de YouTube y disfruta de mi contenido
-              de fútbol, opiniones y entretenimiento.
-            </p>
-
-            <a
-              href="https://youtu.be/p8u0HCdWr2E"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-button"
-            >
-              Ver vídeo en YouTube →
-            </a>
-
-          </div>
-        </div>
-
-        <!-- CONTENIDO DE FÚTBOL -->
-
-        <div class="video-card">
-
-          <div class="video-placeholder">
-            ⚽
-          </div>
-
-          <div class="video-info">
-
-            <h3>
-              Contenido de fútbol
-            </h3>
-
-            <p>
-              Retos, filtros, opiniones y actualidad del mundo del fútbol.
-            </p>
-
-            <a
-              href="https://www.youtube.com/@geririmbi"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-button"
-            >
-              Ver mi canal →
-            </a>
-
-          </div>
-        </div>
-
-        <!-- GAMING -->
-
-        <div class="video-card">
-
-          <div class="video-placeholder">
-            🎮
-          </div>
-
-          <div class="video-info">
-
-            <h3>
-              Gaming y directos
-            </h3>
-
-            <p>
-              Fortnite, Rocket League, EA Sports FC y mejores momentos
-              de mis partidas.
-            </p>
-
-            <a
-              href="https://www.youtube.com/@geririmbi"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="social-button"
-            >
-              Ver vídeos →
-            </a>
-
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- REDES SOCIALES -->
-
-  <section id="redes">
-    <div class="container">
-
-      <h2 class="section-title">
-        Sígueme en redes
-      </h2>
-
-      <p class="section-subtitle">
-        Encuéntrame en mis plataformas principales.
-      </p>
-
-      <div class="social-grid">
-
-        <!-- TIKTOK -->
-
-        <div class="social-card">
-
-          <div class="content-icon">
-            🎵
-          </div>
-
-          <h3>
-            TikTok
-          </h3>
-
-          <p>
-            @geririmbi
-          </p>
+        <div class="hero-mini-links">
 
           <a
             href="https://www.tiktok.com/@geririmbi"
             target="_blank"
             rel="noopener noreferrer"
-            class="social-button"
           >
-            Visitar TikTok →
+            TikTok @geririmbi
+          </a>
+
+          <a
+            href="https://www.instagram.com/geririmbi/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Instagram @geririmbi
           </a>
 
         </div>
 
+      </div>
+
+      <div class="hero-visual">
+
+        <div class="visual-card">
+
+          <div class="visual-top">
+            <span>GERIRIMBI.COM</span>
+
+            <span class="status">
+              <span class="status-dot"></span>
+              Online
+            </span>
+          </div>
+
+          <div class="visual-main">
+
+            <div class="big-name">
+              GERI<span>RIMBI</span>
+            </div>
+
+            <p>
+              Fútbol · Gaming · Entretenimiento
+            </p>
+
+          </div>
+
+          <div class="visual-lines">
+            <div class="visual-line"></div>
+            <div class="visual-line"></div>
+            <div class="visual-line"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ESTADÍSTICAS -->
+
+  <section class="stats">
+    <div class="container stats-grid">
+
+      <div class="stat">
+        <div class="stat-number">
+          3.300<span>+</span>
+        </div>
+        <div class="stat-label">
+          Seguidores en TikTok
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">
+          2.500<span>+</span>
+        </div>
+        <div class="stat-label">
+          Suscriptores en YouTube
+        </div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">
+          100<span>+</span>
+        </div>
+        <div class="stat-label">
+          Seguidores en Instagram
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SOBRE MÍ -->
+
+  <section class="section" id="sobre-mi">
+    <div class="container">
+
+      <div class="section-heading">
+
+        <div class="eyebrow">
+          Sobre mí
+        </div>
+
+        <h2>
+          Un creador con pasión por el fútbol y el gaming.
+        </h2>
+
+        <p class="section-description">
+          Comparto mis experiencias, mis opiniones, mis retos y mi
+          evolución como creador de contenido.
+        </p>
+
+      </div>
+
+      <div class="content-grid">
+
+        <div class="content-card">
+          <div class="content-number">01 / FÚTBOL</div>
+
+          <h3>Fútbol</h3>
+
+          <p>
+            Retos, filtros, actualidad, opiniones, partidos y todo
+            lo relacionado con el mundo del fútbol.
+          </p>
+        </div>
+
+        <div class="content-card">
+          <div class="content-number">02 / GAMING</div>
+
+          <h3>Gaming</h3>
+
+          <p>
+            Fortnite, Rocket League, EA Sports FC, partidas, directos
+            y mejores momentos.
+          </p>
+        </div>
+
+        <div class="content-card">
+          <div class="content-number">03 / CREACIÓN</div>
+
+          <h3>Entretenimiento</h3>
+
+          <p>
+            Vlogs, proyectos, experiencias, nuevos retos y contenido
+            diferente para las redes.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- REDES -->
+
+  <section class="section" id="redes">
+    <div class="container">
+
+      <div class="section-heading">
+
+        <div class="eyebrow">
+          Mis plataformas
+        </div>
+
+        <h2>
+          Encuéntrame en redes.
+        </h2>
+
+        <p class="section-description">
+          Sígueme para no perderte los próximos vídeos, retos y directos.
+        </p>
+
+      </div>
+
+      <div class="social-grid">
+
         <!-- YOUTUBE -->
 
-        <div class="social-card">
+        <a
+          href="https://www.youtube.com/@geririmbi"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-card"
+        >
 
-          <div class="content-icon">
-            ▶️
+          <div>
+            <div class="social-icon youtube">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.9V8.1l6.5 3.9-6.5 3.9Z"/>
+              </svg>
+
+            </div>
+
+            <h3>YouTube</h3>
+            <p>Vídeos largos, opiniones y contenido de fútbol y gaming.</p>
+          </div>
+
+          <span class="social-link">
+            Visitar canal →
+          </span>
+
+        </a>
+
+        <!-- TIKTOK -->
+
+        <a
+          href="https://www.tiktok.com/@geririmbi"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-card"
+        >
+
+          <div>
+            <div class="social-icon tiktok">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19.6 7.1a5.7 5.7 0 0 1-3.5-1.2v8.2a5.9 5.9 0 1 1-5.1-5.8v3a2.9 2.9 0 1 0 2.1 2.8V0h3a5.7 5.7 0 0 0 3.5 4.1v3Z"/>
+              </svg>
+
+            </div>
+
+            <h3>TikTok</h3>
+            <p>Retos de fútbol, filtros, vídeos cortos y momentos virales.</p>
+          </div>
+
+          <span class="social-link">
+            Visitar perfil →
+          </span>
+
+        </a>
+
+        <!-- INSTAGRAM -->
+
+        <a
+          href="https://www.instagram.com/geririmbi/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-card"
+        >
+
+          <div>
+            <div class="social-icon instagram">
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5A4.5 4.5 0 1 1 7.5 12 4.5 4.5 0 0 1 12 7.5Zm0 2A2.5 2.5 0 1 0 14.5 12 2.5 2.5 0 0 0 12 9.5ZM17.5 6a1 1 0 1 1-1 1 1 1 0 0 1 1-1Z"/>
+              </svg>
+
+            </div>
+
+            <h3>Instagram</h3>
+            <p>Contenido personal, novedades, fotos y momentos del día a día.</p>
+          </div>
+
+          <span class="social-link">
+            Visitar perfil →
+          </span>
+
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ÚLTIMO VÍDEO -->
+
+  <section class="section" id="videos">
+    <div class="container">
+
+      <div class="section-heading">
+
+        <div class="eyebrow">
+          Último contenido
+        </div>
+
+        <h2>
+          Mi último vídeo de YouTube.
+        </h2>
+
+        <p class="section-description">
+          Aquí podrás encontrar mis vídeos más recientes y destacados.
+        </p>
+
+      </div>
+
+      <div class="latest-video">
+
+        <div class="video-wrapper">
+
+          <iframe
+            src="https://www.youtube.com/embed/p8u0HCdWr2E"
+            title="Último vídeo de Geririmbi"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
+
+        </div>
+
+        <div class="video-info">
+
+          <div class="video-label">
+            YouTube · Último vídeo
           </div>
 
           <h3>
-            YouTube
+            Descubre mi último contenido.
           </h3>
 
           <p>
-            Geririmbi
+            Entra en mi canal para ver vídeos de fútbol, opiniones,
+            retos, gaming y mucho más contenido.
           </p>
 
           <a
             href="https://www.youtube.com/@geririmbi"
             target="_blank"
             rel="noopener noreferrer"
-            class="social-button"
+            class="button button-primary"
           >
-            Visitar YouTube →
-          </a>
-
-        </div>
-
-        <!-- INSTAGRAM -->
-
-        <div class="social-card">
-
-          <div class="content-icon">
-            📸
-          </div>
-
-          <h3>
-            Instagram
-          </h3>
-
-          <p>
-            @geririmbi
-          </p>
-
-          <a
-            href="https://www.instagram.com/geririmbi/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-button"
-          >
-            Visitar Instagram →
+            Ver canal completo →
           </a>
 
         </div>
 
       </div>
+
     </div>
   </section>
 
   <!-- CONTACTO -->
 
-  <section id="contacto">
+  <section class="section" id="contacto">
     <div class="container">
 
       <div class="contact-box">
 
-        <h2 class="section-title">
-          ¿Hablamos?
+        <div class="eyebrow">
+          Colaboraciones
+        </div>
+
+        <h2>
+          ¿Tienes una propuesta?
         </h2>
 
         <p>
-          Para colaboraciones, proyectos, propuestas o cualquier consulta,
-          puedes contactar conmigo por correo electrónico.
+          Si quieres contactar conmigo para colaboraciones, proyectos,
+          campañas o propuestas, puedes escribirme directamente.
         </p>
 
         <a
           href="mailto:geririmbi@gmail.com"
           class="button button-primary"
         >
-          Contactar para colaboraciones
+          Contactar por email →
         </a>
 
       </div>
+
     </div>
   </section>
 
-  <!-- PIE DE PÁGINA -->
+  <!-- FOOTER -->
 
   <footer>
-    <div class="container">
-      © 2026 Geririmbi. Todos los derechos reservados.
+    <div class="container footer-inner">
+
+      <div>
+        © 2026 Geririmbi. Todos los derechos reservados.
+      </div>
+
+      <div class="footer-links">
+
+        <a
+          href="https://www.youtube.com/@geririmbi"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          YouTube
+        </a>
+
+        <a
+          href="https://www.tiktok.com/@geririmbi"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          TikTok
+        </a>
+
+        <a
+          href="https://www.instagram.com/geririmbi/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
+
+      </div>
+
     </div>
   </footer>
 
